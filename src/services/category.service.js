@@ -4,6 +4,12 @@ const ApiError = require('../utils/ApiError');
 
 
 const createCategory = async (categoryBody) => {
+  let categoryExists = await Category.findOne({
+    name: categoryBody.name
+  })
+  if(categoryExists){
+    throw new ApiError(httpStatus.BAD_REQUEST, "Category already exists");
+  }
   return Category.create(categoryBody);
 };
 

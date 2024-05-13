@@ -2,8 +2,13 @@ const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { categoryService } = require('../services');
+const { addCategorySchema } = require('../utils/Schema/category');
 
 const createCategory = catchAsync(async (req, res) => {
+  const categoryValidation = addCategorySchema.validate(req.body)
+  if (categoryValidation.error) {
+    throw new ApiError(httpStatus.BAD_REQUEST, categoryValidation.error.details[0].message);
+  }
   const category = await categoryService.createCategory(req.body);
   res.status(httpStatus.CREATED).send(category);
 });

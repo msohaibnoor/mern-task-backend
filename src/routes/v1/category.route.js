@@ -1,21 +1,20 @@
 const express = require('express');
-// const auth = require('../../middlewares/auth');
-// const validate = require('../../middlewares/validate');
-// const userValidation = require('../../validations/user.validation');
 const categoryController = require('../../controllers/category.controller');
+const { protect } = require('../../middlewares/authMiddleware');
 
 const router = express.Router();
 
+
 router
   .route('/')
-  .post( categoryController.createCategory)
-  .get(categoryController.getCategories);
+  .post(protect, categoryController.createCategory)
+  .get(protect, categoryController.getCategories);
 
 router
   .route('/:categoryId')
-  .get( categoryController.getCategory)
-  .patch(categoryController.updateCategory)
-  .delete( categoryController.deleteCategory);
+  .get(protect, categoryController.getCategory)
+  .patch(protect, categoryController.updateCategory)
+  .delete(protect,  categoryController.deleteCategory);
 
 module.exports = router;
 

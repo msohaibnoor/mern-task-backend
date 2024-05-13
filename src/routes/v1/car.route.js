@@ -1,25 +1,23 @@
 const express = require('express');
-// const auth = require('../../middlewares/auth');
-// const validate = require('../../middlewares/validate');
-// const userValidation = require('../../validations/user.validation');
 const carController = require('../../controllers/car.controller');
+const { protect } = require('../../middlewares/authMiddleware');
 
 const router = express.Router();
 
 router
   .route('/')
-  .post( carController.createCar)
-  .get(carController.getCars);
+  .post(protect, carController.createCar)
+  .get(protect, carController.getCars);
 
 router
   .route('/count')
-  .get(carController.getCarCount);
+  .get(protect, carController.getCarCount);
 
 router
   .route('/:carId')
-  .get( carController.getCar)
-  .patch(carController.updateCar)
-  .delete( carController.deleteCar);
+  .get(protect, carController.getCar)
+  .patch(protect, carController.updateCar)
+  .delete(protect,  carController.deleteCar);
 
 
 

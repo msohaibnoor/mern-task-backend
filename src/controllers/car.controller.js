@@ -2,8 +2,13 @@ const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { carService } = require('../services');
+const { addCarSchema } = require('../utils/Schema/car');
 
 const createCar = catchAsync(async (req, res) => {
+  const carValidation = addCarSchema.validate(req.body)
+  if (carValidation.error) {
+    throw new ApiError(httpStatus.BAD_REQUEST, carValidation.error.details[0].message);
+  }
   const car = await carService.createCar(req.body);
   res.status(httpStatus.CREATED).send(car);
 });
@@ -23,7 +28,8 @@ const getCarCount = catchAsync(async (req, res) => {
 });
 
 const getCar = catchAsync(async (req, res) => {
-  const car = await carService.getCarById(req.params.cardId);
+  console.log(req.params)
+  const car = await carService.getCarById(req.params.carId);
   if (!car) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Car not found');
   }
