@@ -14,9 +14,7 @@ const createCategory = catchAsync(async (req, res) => {
 });
 
 const getCategories = catchAsync(async (req, res) => {
-  const filter = req.query;
-  const options = req.query;
-  const result = await categoryService.queryCategories(filter, options);
+  const result = await categoryService.queryCategories(req.query);
   res.send(result);
 });
 

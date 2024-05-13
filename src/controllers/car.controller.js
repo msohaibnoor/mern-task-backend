@@ -14,9 +14,8 @@ const createCar = catchAsync(async (req, res) => {
 });
 
 const getCars = catchAsync(async (req, res) => {
-  const filter = req.query
-  const options = req.query
-  const result = await carService.queryCars(filter, options);
+  const query = req.query
+  const result = await carService.queryCars(query);
   res.send(result);
 });
 

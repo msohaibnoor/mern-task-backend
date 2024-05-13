@@ -14,9 +14,24 @@ const createCategory = async (categoryBody) => {
 };
 
 
-const queryCategories = async (filter, options) => {
-  const categories = await Category.find({});
-  return categories;
+const queryCategories = async (query) => {
+  const { page, limit } = query;
+  const pageNumber = Number(page) || 1;
+  const pageSize = Number(limit) || 5; // Default page size is 5, if not specified
+
+  try {
+    const categories = await Category.find({})
+      .skip((pageNumber - 1) * pageSize) // Skip records based on the page number
+      .limit(pageSize); // Limit the number of records per page
+  
+    const totalCategories = await Category.countDocuments(); // Get the total number of categories
+  
+    const pageCount = Math.ceil(totalCategories / pageSize); // Calculate the total number of pages
+  
+    return { categories, pageCount };
+  } catch (error) {
+    throw new ApiError("Error querying categories: " + error.message);
+  }
 };
 
 
