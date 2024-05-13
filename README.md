@@ -36,7 +36,6 @@ Welcome to the Car Management System project! This system provides a platform fo
 6. **Security**: Implements protection against XSS (Cross-Site Scripting) and utilizes JWT (JSON Web Tokens) for authentication.
 7. **Data Validation**: Frontend and backend validations are implemented for create and update modules to ensure data integrity.
 
-
 ## Contributors
 
 - [Sohaib Noor](https://github.com/msohaibnoor)

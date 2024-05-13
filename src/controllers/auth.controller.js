@@ -1,8 +1,8 @@
-const httpStatus = require('http-status');
-const catchAsync = require('../utils/catchAsync');
-const { authService, userService, tokenService, emailService } = require('../services');
-const { loginSchema } = require('../utils/Schema/auth');
-const ApiError = require('../utils/ApiError');
+const httpStatus = require("http-status");
+const catchAsync = require("../utils/catchAsync");
+const { authService, userService, tokenService, emailService } = require("../services");
+const { loginSchema } = require("../utils/Schema/auth");
+const ApiError = require("../utils/ApiError");
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -12,7 +12,7 @@ const register = catchAsync(async (req, res) => {
 
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
-  const loginValidation = loginSchema.validate(req.body)
+  const loginValidation = loginSchema.validate(req.body);
   if (loginValidation.error) {
     throw new ApiError(httpStatus.BAD_REQUEST, loginValidation.error.details[0].message);
   }
@@ -61,5 +61,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   sendVerificationEmail,
-  verifyEmail,
+  verifyEmail
 };

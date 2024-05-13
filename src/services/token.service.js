@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken');
-const moment = require('moment');
-const httpStatus = require('http-status');
+const jwt = require("jsonwebtoken");
+const moment = require("moment");
+const httpStatus = require("http-status");
 // const config = require('../config/config');
-const userService = require('./user.service');
-const { Token } = require('../models');
-const ApiError = require('../utils/ApiError');
-const { tokenTypes } = require('../config/tokens');
+const userService = require("./user.service");
+const { Token } = require("../models");
+const ApiError = require("../utils/ApiError");
+const { tokenTypes } = require("../config/tokens");
 
 /**
  * Generate token
@@ -20,7 +20,7 @@ const generateToken = (userId, expires, type, secret = process.env.JWT_SECRET) =
     sub: userId,
     iat: moment().unix(),
     exp: expires.unix(),
-    type,
+    type
   };
   return jwt.sign(payload, secret);
 };
@@ -54,7 +54,7 @@ const verifyToken = async (token, type) => {
   const payload = jwt.verify(token, config.jwt.secret);
   const tokenDoc = await Token.findOne({ token, type, user: payload.sub, blacklisted: false });
   if (!tokenDoc) {
-    throw new Error('Token not found');
+    throw new Error("Token not found");
   }
   return tokenDoc;
 };
@@ -65,21 +65,19 @@ const verifyToken = async (token, type) => {
  * @returns {Promise<Object>}
  */
 const generateAuthTokens = async (user) => {
-  const accessTokenExpires = moment().add(process.env.JWT_ACCESS_EXPIRATION_MINUTES, 'minutes');
+  const accessTokenExpires = moment().add(process.env.JWT_ACCESS_EXPIRATION_MINUTES, "minutes");
   const accessToken = generateToken(user.id, accessTokenExpires, tokenTypes.ACCESS);
   return {
     access: {
       token: accessToken,
-      expires: accessTokenExpires.toDate(),
+      expires: accessTokenExpires.toDate()
     }
   };
 };
-
-
 
 module.exports = {
   generateToken,
   saveToken,
   verifyToken,
-  generateAuthTokens,
+  generateAuthTokens
 };

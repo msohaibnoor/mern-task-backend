@@ -10,15 +10,15 @@
 //       }
 //     }
 //   }
-  
+
 //   module.exports = ApiError;
-  
+
 class ApiError extends Error {
   constructor(statusCode, message) {
-    super()
-    this.message = message
-    this.statusCode = statusCode ?? 500
+    super();
+    this.message = message;
+    this.statusCode = statusCode ?? 500;
   }
 }
 
-module.exports = ApiError
+module.exports = ApiError;

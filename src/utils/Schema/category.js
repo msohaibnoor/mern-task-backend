@@ -1,9 +1,9 @@
-const Joi = require("joi")
+const Joi = require("joi");
 
 const addCategorySchema = Joi.object({
-  name: Joi.string().required(),
-})
+  name: Joi.string().required()
+});
 
 module.exports = {
   addCategorySchema
-}
+};
